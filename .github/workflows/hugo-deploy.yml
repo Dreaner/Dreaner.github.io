@@ -1,0 +1,32 @@
+name: Deploy Hugo site to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main # 当推送到 main 分支时触发
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          submodules: true # 确保下载所有主题子模块
+          fetch-depth: 0
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: 'latest' # 使用最新版 Hugo
+          
+      - name: Build Hugo Site
+        run: hugo --minify # 运行 Hugo 生成 public 文件夹
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public # 发布 public 文件夹的内容
+          cname: Dreaner.github.io # 设置自定义域名（如果是用户/组织页面仓库）
+          publish_branch: gh-pages # 发布到 gh-pages 分支

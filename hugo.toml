@@ -1,0 +1,5 @@
+# hugo.toml
+theme = "ananke"
+baseURL = "https://Dreaner.github.io/"
+languageCode = "zh-cn"
+title = "Julián 的个人主页"
